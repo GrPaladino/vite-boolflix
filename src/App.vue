@@ -1,11 +1,22 @@
 <script>
-// import
+import { store } from "./store";
+
+export default {
+  data() {
+    return {
+      store,
+    };
+  },
+};
 </script>
 
 <template>
-  <h1 class="container">ciao</h1>
+  <div class="container mt-3">
+    <input v-model="store.movieSearched" type="text" />
+    <button class="btn btn-primary mx-2">Search...</button>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-@use "./styles/general.scss";
+@use "./style/general.scss";
 </style>
