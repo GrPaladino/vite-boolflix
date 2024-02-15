@@ -9,4 +9,6 @@ export const store = reactive({
 
   tvShowApi:
     "https://api.themoviedb.org/3/search/tv?api_key=3cd49753d971acc438f6ec34b4197201&query=",
+
+  imageUrl: "https://image.tmdb.org/t/p/w500",
 });

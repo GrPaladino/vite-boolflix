@@ -10,6 +10,7 @@ export default {
     return {
       store,
 
+
       movieSearched: "",
     };
   },
@@ -21,7 +22,8 @@ export default {
             title: movie.title,
             original_title: movie.original_title,
             language: movie.original_language,
-            vote: movie.vote_average,
+            vote: Math.ceil(movie.vote_average / 2),
+            image: movie.poster_path,
           };
         });
       });
@@ -34,7 +36,8 @@ export default {
             title: serie.name,
             original_title: serie.original_name,
             language: serie.original_language,
-            vote: serie.vote_average,
+            vote: Math.ceil(serie.vote_average / 2),
+            image: serie.poster_path,
           };
         });
       });
@@ -58,17 +61,17 @@ export default {
         return new URL("./assets/flag-icons/de.svg", import.meta.url).href;
       return new URL("./assets/flag-icons/xx.svg", import.meta.url).href;
     },
-  },
+
 };
 </script>
 
 <template>
+  <!-- #### TODO FONTAWESOME PROBLEM -->
   <div class="container mt-3">
     <input v-model="movieSearched" type="text" />
     <button @click="performSearch()" class="btn btn-primary mx-2">
       Search...
     </button>
-
     <ul v-for="movie in store.movies">
       <li>Titolo: {{ movie.title }}</li>
       <li>
@@ -77,14 +80,37 @@ export default {
       </li>
       <li>
         Lingua:
-        <img v-if="movie.language == 'en'" src="./assets/flag-icons/gb.svg" />
-        <img v-if="movie.language == 'it'" src="./assets/flag-icons/it.svg" />
-        <img v-if="movie.language == 'es'" src="./assets/flag-icons/es.svg" />
-        <img v-if="movie.language == 'fr'" src="./assets/flag-icons/fr.svg" />
-        <img v-if="movie.language == 'de'" src="./assets/flag-icons/de.svg" />
-        <img v-else src="./assets/flag-icons/xx.svg" />
+        <img :src="getFlagIcon(movie.language)" />
       </li>
-      <li>Voto: {{ movie.vote }}</li>
+      <li>
+        Voto:
+
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="movie.vote >= 1 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="movie.vote >= 2 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="movie.vote >= 3 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="movie.vote >= 4 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="movie.vote >= 5 ? 'star-checked' : ''"
+        />
+      </li>
     </ul>
 
     <ul v-for="serie in store.tvShows">
@@ -97,7 +123,34 @@ export default {
         Lingua:
         <img :src="getFlagIcon(serie.language)" />
       </li>
-      <li>Voto: {{ serie.vote }}</li>
+      <li>
+        Voto:
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="serie.vote >= 1 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="serie.vote >= 2 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="serie.vote >= 3 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="serie.vote >= 4 ? 'star-checked' : ''"
+        />
+        <font-awesome-icon
+          icon="fa-solid fa-star fs-1"
+          value="5"
+          :class="serie.vote >= 5 ? 'star-checked' : ''"
+        />
+      </li>
     </ul>
   </div>
 </template>
@@ -108,5 +161,9 @@ export default {
 img {
   width: 20px;
   height: 20px;
+}
+
+.star-checked {
+  color: #ffd43b;
 }
 </style>
