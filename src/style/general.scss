@@ -1,5 +1,14 @@
-@use "./partials/variables";
-@use "./partials/mixins";
+@use "./partials/variables" as *;
+@use "./partials/mixins" as *;
 
 // # Bootstrap scss
 @import "bootstrap/scss/bootstrap";
+
+img {
+  width: 100%;
+  display: block;
+}
+
+.star-checked {
+  color: #ffd43b;
+}
