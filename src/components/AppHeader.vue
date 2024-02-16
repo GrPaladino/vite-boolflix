@@ -1,54 +1,12 @@
 <script>
 import { store } from "../store";
 
-// * Axios
-import axios from "axios";
-
 export default {
   data() {
     return {
       store,
       movieSearched: "",
     };
-  },
-  methods: {
-    fetchMovies() {
-      axios.get(`${store.moviesApi} ${this.movieSearched}`).then((res) => {
-        store.movies = res.data.results.map((movie) => {
-          console.log(movie);
-          return {
-            title: movie.title,
-            original_title: movie.original_title,
-            language: movie.original_language,
-            vote: Math.ceil(movie.vote_average / 2),
-            image: movie.poster_path,
-            id: movie.id,
-            description: movie.overview,
-          };
-        });
-      });
-    },
-
-    fetchTvShow() {
-      axios.get(`${store.tvShowApi} ${this.movieSearched}`).then((res) => {
-        store.tvShows = res.data.results.map((serie) => {
-          return {
-            title: serie.name,
-            original_title: serie.original_name,
-            language: serie.original_language,
-            vote: Math.ceil(serie.vote_average / 2),
-            image: serie.poster_path,
-            id: serie.id,
-            description: serie.overview,
-          };
-        });
-      });
-    },
-
-    performSearch() {
-      this.fetchMovies();
-      this.fetchTvShow();
-    },
   },
 };
 </script>
@@ -61,7 +19,7 @@ export default {
       <input
         v-model="movieSearched"
         type="text"
-        @keyup.enter="performSearch()"
+        @keyup.enter="$emit('search', this.movieSearched)"
       />
     </div>
   </div>
