@@ -27,7 +27,6 @@ export default {
         .then((res) => {
           store.movies = res.data.results.map((movie) => {
             this.loading = true;
-            console.log(movie);
 
             return {
               title: movie.title,
@@ -39,10 +38,11 @@ export default {
               description: movie.overview,
             };
           });
+          if (store.movies == "") this.error = true;
         })
         .catch((error) => {
           console.log(error);
-          if (store.movies == "") this.error = true;
+          if (error) this.error = true;
         })
         .finally(() => {
           this.loading = false;
