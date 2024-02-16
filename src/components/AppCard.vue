@@ -32,6 +32,10 @@ export default {
     showDetails() {
       this.showInfo = !this.showInfo;
     },
+
+    getBlankPoster() {
+      return new URL("../assets/img/no-poster.webp", import.meta.url).href;
+    },
   },
 
   props: {
@@ -43,10 +47,12 @@ export default {
 <template>
   <div class="product">
     <img
+      v-if="product.image"
       :src="store.imageUrl + product.image"
       @mouseenter="showDetails()"
       :alt="product.title"
     />
+    <img v-else :src="getBlankPoster()" :alt="product.title" />
 
     <div v-if="showInfo" @mouseleave="showImage()" class="info">
       <ul>
