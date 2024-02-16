@@ -56,7 +56,10 @@ export default {
 
     <div v-if="showInfo" @mouseleave="showImage()" class="info">
       <ul>
-        <li class="mt-3">{{ product.original_title }}</li>
+        <li class="mt-3">{{ product.title }}</li>
+        <li v-if="product.title != product.original_title" class="mt-3">
+          {{ product.original_title }}
+        </li>
 
         <li>
           <img :src="getFlagIcon(product.language)" />
@@ -104,7 +107,7 @@ export default {
     }
 
     li {
-      margin: 2rem 0;
+      margin: 1rem 0;
       font-size: 1.5rem;
     }
 

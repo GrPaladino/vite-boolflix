@@ -5,6 +5,8 @@ import { store } from "./store";
 // * Import components
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
+import AppError from "./components/AppError.vue";
+import AppLoading from "./components/AppLoading.vue";
 
 // * Axios
 import axios from "axios";
@@ -13,24 +15,38 @@ export default {
   data() {
     return {
       store,
+      loading: false,
+      error: false,
     };
   },
 
   methods: {
     fetchMovies(movieSearched) {
-      axios.get(`${store.moviesApi} ${movieSearched}`).then((res) => {
-        store.movies = res.data.results.map((movie) => {
-          return {
-            title: movie.title,
-            original_title: movie.original_title,
-            language: movie.original_language,
-            vote: Math.ceil(movie.vote_average / 2),
-            image: movie.poster_path,
-            id: movie.id,
-            description: movie.overview,
-          };
+      axios
+        .get(`${store.moviesApi} ${movieSearched}`)
+        .then((res) => {
+          store.movies = res.data.results.map((movie) => {
+            this.loading = true;
+            console.log(movie);
+
+            return {
+              title: movie.title,
+              original_title: movie.original_title,
+              language: movie.original_language,
+              vote: Math.ceil(movie.vote_average / 2),
+              image: movie.poster_path,
+              id: movie.id,
+              description: movie.overview,
+            };
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          if (store.movies == "") this.error = true;
+        })
+        .finally(() => {
+          this.loading = false;
         });
-      });
     },
 
     fetchTvShow(movieSearched) {
@@ -58,6 +74,8 @@ export default {
   components: {
     AppHeader,
     AppMain,
+    AppError,
+    AppLoading,
   },
 };
 </script>
@@ -66,6 +84,8 @@ export default {
   <div class="wrapper">
     <app-header @search="performSearch" />
     <app-main />
+    <app-error v-if="error" />
+    <app-loading v-if="loading" />
   </div>
 </template>
 
