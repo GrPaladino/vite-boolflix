@@ -15,12 +15,15 @@ export default {
     fetchMovies() {
       axios.get(`${store.moviesApi} ${this.movieSearched}`).then((res) => {
         store.movies = res.data.results.map((movie) => {
+          console.log(movie);
           return {
             title: movie.title,
             original_title: movie.original_title,
             language: movie.original_language,
             vote: Math.ceil(movie.vote_average / 2),
             image: movie.poster_path,
+            id: movie.id,
+            description: movie.overview,
           };
         });
       });
@@ -35,6 +38,8 @@ export default {
             language: serie.original_language,
             vote: Math.ceil(serie.vote_average / 2),
             image: serie.poster_path,
+            id: serie.id,
+            description: serie.overview,
           };
         });
       });
@@ -62,7 +67,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use "../style/partials/mixins" as *;
 
 .header {

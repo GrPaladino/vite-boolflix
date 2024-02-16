@@ -21,10 +21,17 @@ export default {
 </script>
 
 <template>
-  <app-header />
-  <app-main />
+  <div class="wrapper">
+    <app-header />
+    <app-main />
+  </div>
 </template>
 
 <style lang="scss">
 @use "./style/general.scss";
+.wrapper {
+  background-color: #434343;
+  height: 100vh;
+  overflow: scroll;
+}
 </style>

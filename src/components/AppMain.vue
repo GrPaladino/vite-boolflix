@@ -1,7 +1,6 @@
 <script>
 import { store } from "../store";
-import MovieCard from "./MovieCard.vue";
-import SerieCard from "./SerieCard.vue";
+import AppCard from "./AppCard.vue";
 
 export default {
   data() {
@@ -11,23 +10,37 @@ export default {
   },
 
   components: {
-    MovieCard,
-    SerieCard,
+    AppCard,
   },
 };
 </script>
-
 <template>
   <div class="container">
-    <div class="row">
-      <div v-for="(movie, index) in store.movies" class="col-3 my-2">
-        <movie-card @click="store.handelModalMovies(index)" :movie="movie" />
-      </div>
-      <div v-for="serie in store.tvShows" class="col-3 my-2">
-        <serie-card :serie="serie" />
-      </div>
+    <div class="row g-3">
+      <h2>Movies</h2>
+      <app-card
+        v-for="movie in store.movies"
+        :key="movie.id"
+        :product="movie"
+        class="col-3"
+      />
+
+      <h2>Tv Shows</h2>
+
+      <app-card
+        v-for="serie in store.tvShows"
+        :key="serie.id"
+        :product="serie"
+        class="col-3"
+      />
     </div>
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+h2 {
+  margin: 2rem auto;
+  text-align: center;
+  color: white;
+}
+</style>
