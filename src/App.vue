@@ -38,7 +38,8 @@ export default {
               description: movie.overview,
             };
           });
-          if (store.movies == "") this.error = true;
+          if (store.movies == "" && store.tvShows == "") this.error = true;
+          if (store.movies == "") store.noMovie = true;
         })
         .catch((error) => {
           if (error) this.error = true;
@@ -65,7 +66,8 @@ export default {
               description: serie.overview,
             };
           });
-          if (store.tvShows == "") this.error = true;
+          if (store.movies == "" && store.tvShows == "") this.error = true;
+          if (store.tvShows == "") store.noSerie = true;
         })
         .catch((error) => {
           if (error) this.error = true;
