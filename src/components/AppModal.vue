@@ -30,27 +30,26 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <ul>
-      <li>Titolo: {{ movie.title }}</li>
+  <div>
+    <ul @mouseleave="store.closeModal()">
+      <li>Titolo: {{ store.modal.title }}</li>
       <li>
         Titolo originale:
-        {{ movie.original_title }}
+        {{ store.modal.originalTitle }}
       </li>
       <li>
         Lingua:
-        <img :src="getFlagIcon(movie.language)" />
+        <img :src="getFlagIcon(store.modal.language)" />
       </li>
       <li>
-        Voto: {{ movie.vote }}
-
+        Voto:
         <font-awesome-icon
-          v-for="index in movie.vote"
+          v-for="index in store.modal.vote"
           icon="fa-solid fa-star fs-1"
           class="star-checked"
         />
         <font-awesome-icon
-          v-for="index in 5 - movie.vote"
+          v-for="index in 5 - store.modal.vote"
           icon="fa-solid fa-star fs-1"
         />
       </li>

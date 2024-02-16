@@ -7,6 +7,7 @@ export default {
       store,
     };
   },
+
   props: {
     serie: Object,
   },
