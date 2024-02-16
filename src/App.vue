@@ -41,7 +41,6 @@ export default {
           if (store.movies == "") this.error = true;
         })
         .catch((error) => {
-          console.log(error);
           if (error) this.error = true;
         })
         .finally(() => {
@@ -50,19 +49,30 @@ export default {
     },
 
     fetchTvShow(movieSearched) {
-      axios.get(`${store.tvShowApi} ${movieSearched}`).then((res) => {
-        store.tvShows = res.data.results.map((serie) => {
-          return {
-            title: serie.name,
-            original_title: serie.original_name,
-            language: serie.original_language,
-            vote: Math.ceil(serie.vote_average / 2),
-            image: serie.poster_path,
-            id: serie.id,
-            description: serie.overview,
-          };
+      axios
+        .get(`${store.tvShowApi} ${movieSearched}`)
+        .then((res) => {
+          store.tvShows = res.data.results.map((serie) => {
+            this.loading = true;
+
+            return {
+              title: serie.name,
+              original_title: serie.original_name,
+              language: serie.original_language,
+              vote: Math.ceil(serie.vote_average / 2),
+              image: serie.poster_path,
+              id: serie.id,
+              description: serie.overview,
+            };
+          });
+          if (store.tvShows == "") this.error = true;
+        })
+        .catch((error) => {
+          if (error) this.error = true;
+        })
+        .finally(() => {
+          this.loading = false;
         });
-      });
     },
 
     performSearch(movieSearched) {
